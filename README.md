@@ -18,6 +18,7 @@ Vim configuration file with lots of improved features and mappings that will hel
 - PEP8 - [Flake8](https://github.com/nvie/vim-flake8)
 - Status Bar - [Powerline](https://github.com/powerline/powerline)
 - Git - [Fugitive](https://github.com/tpope/vim-fugitive)
+- Extras - [Auto Pairs](https://github.com/jiangmiao/auto-pairs)
 
 ### Shortcuts
 - `<F5>` - Show whitespace characters(eol, space, trail, etc.)

@@ -24,6 +24,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'prettier/vim-prettier'
 Plugin 'sjl/gundo.vim'
 Plugin 'rking/ag.vim'
+Plugin 'jiangmiao/auto-pairs'
 Bundle 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -62,15 +63,6 @@ nnoremap <C-H> <C-W><C-H>
 
 " Enable folding with the spacebar
 nnoremap <space> za
-
-" auto closing brackets and quotes
-inoremap " ""<left>
-inoremap ' ''<left>
-inoremap ( ()<left>
-inoremap [ []<left>
-inoremap { {}<left>
-inoremap {<CR> {<CR>}<ESC>O
-inoremap {;<CR> {<CR>};<ESC>O
 
 " Show whitespaces as characters
 set listchars=eol:!,tab:>-,trail:~,space:.,extends:>,precedes:<
