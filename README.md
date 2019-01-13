@@ -11,7 +11,7 @@ Vim configuration file with lots of improved features and mappings that will hel
 - Syntax Checking - [Syntastic](https://github.com/vim-syntastic/syntastic)
 - Files - [NerdTree](https://github.com/scrooloose/nerdtree)
 - Color Scheme - [GruvBox](https://github.com/morhetz/gruvbox)
-- Code Formatting - [Preetier](https://github.com/prettier/vim-prettier)
+- Code Formatting - [Preetier](https://github.com/prettier/vim-prettier), [Black](https://github.com/ambv/black)
 - Graphical Undo - [Gundo](https://github.com/sjl/gundo.vim)
 - Searching - [Ag](https://github.com/rking/ag.vim)
 - Code Completion - [YouCompleteMe](https://valloric.github.io/YouCompleteMe/)

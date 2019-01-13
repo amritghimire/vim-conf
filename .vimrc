@@ -25,6 +25,7 @@ Plugin 'prettier/vim-prettier'
 Plugin 'sjl/gundo.vim'
 Plugin 'rking/ag.vim'
 Plugin 'jiangmiao/auto-pairs'
+Plugin 'ambv/black'
 Bundle 'Valloric/YouCompleteMe'
 
 " All of your Plugins must be added before the following line
@@ -89,12 +90,14 @@ au BufNewFile,BufRead *.py
     \ set textwidth=79 |
     \ set expandtab |
     \ set autoindent |
-    \ set fileformat=unix
+    \ set fileformat=unix |
+    \ nnoremap <leader>p :Black 
 
 au BufNewFile,BufRead *.js,*.html,*.css
     \ set tabstop=2 |
     \ set softtabstop=2 |
-    \ set shiftwidth=2
+    \ set shiftwidth=2 |
+    \ nnoremap <leader>p :Prettier<CR>
 
 " Flag white spaces
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h
@@ -104,10 +107,11 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h
 py << EOF
 import os
 import sys
+import subprocess
 if 'VIRTUAL_ENV' in os.environ:
   project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
+  activate_this = os.path.join(project_base_dir, 'bin/activate')
+  subprocess.call(activate_this)
 EOF
 
 
