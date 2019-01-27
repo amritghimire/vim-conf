@@ -19,7 +19,7 @@ Plugin 'scrooloose/nerdtree'
 Plugin 'kien/ctrlp.vim'
 Plugin 'nvie/vim-flake8'
 Plugin 'tpope/vim-fugitive'
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'vim-airline/vim-airline'
 Plugin 'morhetz/gruvbox'
 Plugin 'prettier/vim-prettier'
 Plugin 'sjl/gundo.vim'
@@ -141,6 +141,7 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = '/usr/bin/python'
+let g:pymode_python = 'python3'
 
 
 " ctrlp settings
