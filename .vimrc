@@ -26,6 +26,7 @@ Plugin 'sjl/gundo.vim'
 Plugin 'rking/ag.vim'
 Plugin 'jiangmiao/auto-pairs'
 Bundle 'Valloric/YouCompleteMe'
+Plugin 'mattn/emmet-vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -158,6 +159,9 @@ let g:gruvbox_invert_selection=0
 " gundo settings
 nnoremap <leader>u :GundoToggle<CR>			" toggle gundo
 
+" emmet settings
+let g:user_emmet_leader_key='<C-Z>'
+let g:user_emmet_mode='a'    "enable all function in all mode.
 
 " -------------------------------
 " CUSTOM FUNCTIONS
