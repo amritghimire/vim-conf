@@ -45,6 +45,7 @@ set hlsearch
 set wildmenu
 set showcmd
 set number relativenumber
+set backspace=indent,eol,start
 
 " Enable Folding
 set foldmethod=indent
