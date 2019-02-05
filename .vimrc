@@ -45,6 +45,7 @@ set hlsearch
 set wildmenu
 set showcmd
 set number relativenumber
+
 " Enable Folding
 set foldmethod=indent
 set foldlevel=99
@@ -100,17 +101,6 @@ au BufNewFile,BufRead *.js,*.html,*.css
 " Flag white spaces
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h
     \ match SpellBad /\s\+$/
-
-" Python virtual-env support
-py << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-
 
 " -------------------------------
 " PLUGINS/BUNDLES settings
