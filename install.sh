@@ -14,7 +14,7 @@ case "$response" in
 			if [ $CURL_IS_AVAILABLE -eq 0 ];
 			then
 			echo curl is availiable.
-			DIRECTORY=$HOME/.vim/bundle/Vundle.vim
+			DIRECTORY=$HOME/.vim/autoload/plug.vim
 			if [ -d "$DIRECTORY" ]; then
 				rm -rf $DIRECTORY
 			fi
@@ -23,8 +23,8 @@ case "$response" in
 				mkdir $DIRECTORY
 			fi
 			curl -sS https://raw.githubusercontent.com/dpakach/vim-conf/master/.vimrc > $HOME/.vimrc && \
-			git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim && \
-			vim +PluginInstall +qall
+			curl -sS https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim > $HOME/.vim/autoload/plug.vim && \
+			vim +PlugInstall +qall
 			else
 			echo curl is not installed.Please Install git in your system and continue.
 			fi
