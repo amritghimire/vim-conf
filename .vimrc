@@ -1,36 +1,34 @@
 set nocompatible              " required
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
-
+call plug#begin('~/.vim/plugged')
+"
 " -------------------------------
 " PLUGINS
 " -------------------------------
-Plugin 'vim-syntastic/syntastic'
-Plugin 'scrooloose/nerdtree'
-Plugin 'kien/ctrlp.vim'
-Plugin 'nvie/vim-flake8'
-Plugin 'tpope/vim-fugitive'
-Plugin 'vim-airline/vim-airline'
-Plugin 'morhetz/gruvbox'
-Plugin 'prettier/vim-prettier'
-Plugin 'sjl/gundo.vim'
-Plugin 'rking/ag.vim'
-Plugin 'jiangmiao/auto-pairs'
-Bundle 'Valloric/YouCompleteMe'
-Plugin 'mattn/emmet-vim'
+Plug 'junegunn/vim-easy-align'
+Plug 'vim-syntastic/syntastic'
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'nvie/vim-flake8'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'morhetz/gruvbox'
+Plug 'prettier/vim-prettier'
+Plug 'sjl/gundo.vim'
+Plug 'rking/ag.vim'
+Plug 'jiangmiao/auto-pairs'
+Plug 'mattn/emmet-vim'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'nsf/gocode'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+Plug 'airblade/vim-gitgutter'
+Plug 'NLKNguyen/papercolor-theme'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
+
+filetype plugin indent on
 
 " Basic
 
@@ -46,6 +44,8 @@ set wildmenu
 set showcmd
 set number relativenumber
 set backspace=indent,eol,start
+set tabstop=4
+set shiftwidth=4
 
 " Enable Folding
 set foldmethod=indent
@@ -53,6 +53,15 @@ set foldlevel=99
 
 " Encoding
 set encoding=utf-8
+
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
+
+" optional reset cursor on start
+augroup myCmds
+au!
+autocmd VimEnter * silent !echo -ne "\e[2 q"
+augroup END
 
 " -------------------------------
 " MAPPINGS
@@ -68,7 +77,7 @@ nnoremap <C-H> <C-W><C-H>
 nnoremap <space> za
 
 " Show whitespaces as characters
-set listchars=eol:!,tab:>-,trail:~,space:.,extends:>,precedes:<
+set listchars=tab::-,trail:~,extends:>,precedes:<
 set list
 noremap <F5> :set list!<CR>
 inoremap <F5> <C-o>:set list!<CR>
@@ -142,10 +151,10 @@ let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_switch_buffer = 0
 
-" gruvbox settings
-colo gruvbox
+" colorscheme settings
+set t_Co=256
 set background=dark
-let g:gruvbox_invert_selection=0
+colorscheme PaperColor
 
 " gundo settings
 nnoremap <leader>u :GundoToggle<CR>			" toggle gundo
