@@ -19,6 +19,14 @@ Vim configuration file with lots of improved features and mappings that will hel
 - Status Line - [airline vim](https://github.com/vim-airline/vim-airline)
 - Git - [Fugitive](https://github.com/tpope/vim-fugitive)
 - Emmet - [Emmet vim](https://github.com/mattn/emmet-vim)
+- Easy Alignment - [VimEasyAlign](https://github.com/junegunn/vim-easy-align)
+- File Buffer - [ctrlp](https://github.com/kien/ctrlp.vim) (TO REPLACE)
+- Ultimate Snippet - [ultisnips](https://github.com/sirver/UltiSnips)
+- Vim Snippet [vim-snippets] (https://github.com/honza/vim-snippets)
+- Intellisenese [neoclide/coc.nvim] (https://github.com/neoclide/coc.nvim)
+- Show Git diff [airblade/vim-gitgutter] (https://github.com/airblade/vim-gitgutter)
+
+
 #### others
 - [Auto Pairs](https://github.com/jiangmiao/auto-pairs)
 
