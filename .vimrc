@@ -6,26 +6,30 @@ call plug#begin('~/.vim/plugged')
 " -------------------------------
 " PLUGINS
 " -------------------------------
-Plug 'junegunn/vim-easy-align'
 Plug 'vim-syntastic/syntastic'
 Plug 'scrooloose/nerdtree'
-Plug 'kien/ctrlp.vim'
 Plug 'nvie/vim-flake8'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'morhetz/gruvbox'
 Plug 'prettier/vim-prettier'
 Plug 'sjl/gundo.vim'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
-Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
-Plug 'nsf/gocode'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'airblade/vim-gitgutter'
 Plug 'NLKNguyen/papercolor-theme'
-
+Plug 'kien/ctrlp.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'amix/vim-zenroom2'
+Plug 'amix/open_file_under_cursor.vim'
+Plug 'tpope/vim-commentary'
+Plug 'dense-analysis/ale'
+Plug 'terryma/vim-expand-region'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'maxbrunsfeld/vim-yankstack'
 call plug#end()
 
 filetype plugin indent on
@@ -86,10 +90,24 @@ cnoremap <F5> <C-c>:set list!<CR>
 " save session
 nnoremap <leader>s :mksession<CR>
 
-" open ag.vim
-nnoremap <leader>a :Ag 
+" open Ack.vim
+nnoremap <leader>a :Ack! 
 
-" -------------------------------
+
+"Goyo 
+nnoremap <silent> <leader>d :Goyo<cr>
+
+" Yank Stack 
+nmap <leader>p <Plug>yankstack_substitute_older_paste
+nmap <leader>P <Plug>yankstack_substitute_newer_paste
+
+" Linter
+let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+nmap <silent> <leader>k <Plug>(ale_previous_wrap)
+nmap <silent> <leader>j <Plug>(ale_next_wrap)
+let g:ale_set_highlights = 1
+let g:airline#extensions#ale#enabled = 1
+"" -------------------------------
 " LANGUAGE SPECIFIC SETTINGS
 " -------------------------------
 "
@@ -144,6 +162,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_python_exec = '/usr/bin/python'
 let g:pymode_python = 'python3'
 
+set statusline+=%<%f\ %h%m%r%{fugitive#statusline()}%=%-14.(%l,%c%V%)\ %P
 
 " ctrlp settings
 let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
