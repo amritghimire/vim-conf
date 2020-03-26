@@ -5,7 +5,7 @@ call plug#begin('~/.vim/plugged')
 "
 " -------------------------------
 " PLUGINS
-" -------------------------------
+" -----------------------------
 Plug 'vim-syntastic/syntastic'
 Plug 'scrooloose/nerdtree'
 Plug 'nvie/vim-flake8'
@@ -13,10 +13,11 @@ Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'morhetz/gruvbox'
 Plug 'prettier/vim-prettier'
-Plug 'sjl/gundo.vim'
+Plug 'vim-scripts/undotree.vim'
 Plug 'mileszs/ack.vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mattn/emmet-vim'
+Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'airblade/vim-gitgutter'
@@ -30,6 +31,12 @@ Plug 'dense-analysis/ale'
 Plug 'terryma/vim-expand-region'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'maxbrunsfeld/vim-yankstack'
+Plug 'ycm-core/YouCompleteMe'
+Plug 'ternjs/tern_for_vim'
+Plug 'skanehira/preview-markdown.vim'
+Plug 'wakatime/vim-wakatime'
+Plug 'rust-lang/rust.vim'
+
 call plug#end()
 
 filetype plugin indent on
@@ -48,8 +55,6 @@ set wildmenu
 set showcmd
 set number relativenumber
 set backspace=indent,eol,start
-set tabstop=4
-set shiftwidth=4
 
 " Enable Folding
 set foldmethod=indent
@@ -93,6 +98,8 @@ nnoremap <leader>s :mksession<CR>
 " open Ack.vim
 nnoremap <leader>a :Ack! 
 
+" Open zsh shell
+nnoremap <leader>z :!zsh<cr>
 
 "Goyo 
 nnoremap <silent> <leader>d :Goyo<cr>
@@ -102,11 +109,14 @@ nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 " Linter
-let g:ale_fixers = {'javascript': ['prettier', 'eslint']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'python': ['autopep8', 'yapf']}
 nmap <silent> <leader>k <Plug>(ale_previous_wrap)
 nmap <silent> <leader>j <Plug>(ale_next_wrap)
 let g:ale_set_highlights = 1
 let g:airline#extensions#ale#enabled = 1
+nnoremap <leader>f :PrettierAsync<cr>
+nnoremap <leader>i :ALEFix<cr>
+
 "" -------------------------------
 " LANGUAGE SPECIFIC SETTINGS
 " -------------------------------
@@ -121,11 +131,6 @@ au BufNewFile,BufRead *.py
     \ set autoindent |
     \ set fileformat=unix
 
-au BufNewFile,BufRead *.js,*.html,*.css
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2
-
 " Flag white spaces
 au BufRead,BufNewFile *.py,*.pyw,*.c,*.h
     \ match SpellBad /\s\+$/
@@ -138,6 +143,13 @@ au BufRead,BufNewFile *.py,*.pyw,*.c,*.h
 let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
+let g:UltiSnipsExpandTrigger="<c-j>"
+" let g:UltiSnipsJumpForwardTrigger="<c-b>"
+" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsEditSplit="vertical"
+
+let g:preview_markdown_vertical=1
+let g:preview_markdown_auto_update=1
 
 " nerdetree settings
 let NERDTreeIgnore=['\.pyc$', '\~$'] "ignore files in NERDTree
@@ -169,6 +181,10 @@ let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
 let g:ctrlp_switch_buffer = 0
+nnoremap <leader>ct :CtrlP<cr>
+nnoremap <leader>cb :CtrlPBuffer<cr>
+nnoremap <leader>cr :CtrlPMRU<cr>
+nnoremap <leader>cm :CtrlPMixed<cr>
 
 " colorscheme settings
 set t_Co=256
@@ -176,13 +192,31 @@ set background=dark
 colorscheme PaperColor
 
 " gundo settings
-nnoremap <leader>u :GundoToggle<CR>			" toggle gundo
+nnoremap <leader>u :UndotreeToggle<CR>			" toggle gundo
 
 " emmet settings
 let g:user_emmet_leader_key='<C-Z>'
 let g:user_emmet_mode='a'    "enable all function in all mode.
 
-" -------------------------------
+
+" Some Shortcuts
+
+nmap <leader>w :w!<cr>
+nmap <leader>q :q<cr>
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+vnoremap <silent> * :call VisualSelection('f')<CR>
+vnoremap <silent> # :call VisualSelection('b')<CR>
+vnoremap $1 <esc>`>a)<esc>`<i(<esc>
+vnoremap $2 <esc>`>a]<esc>`<i[<esc>
+vnoremap $3 <esc>`>a}<esc>`<i{<esc>
+vnoremap $$ <esc>`>a"<esc>`<i"<esc>
+vnoremap $q <esc>`>a'<esc>`<i'<esc>
+vnoremap $e <esc>`>a"<esc>`<i"<esc>
+vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
+
+"-------------------------------
 " CUSTOM FUNCTIONS
 " -------------------------------
 " toggle between number and relativenumber
@@ -198,7 +232,7 @@ endfunc
 
 " strips trailing whitespace at the end of files. this
 " is called on buffer write in the autogroup above.
-nnoremap <leader>w :call <SID>StripTrailingWhitespaces()<CR>
+nnoremap <leader>x :call <SID>StripTrailingWhitespaces()<CR>
 function! <SID>StripTrailingWhitespaces()
     " save last search & cursor position
     let _s=@/
@@ -232,3 +266,19 @@ function! AutoHighlightToggle()
   endif
 endfunction
 
+" virtual tabstops using spaces
+set shiftwidth=2
+set softtabstop=0
+set noexpandtab
+" allow toggling between local and default mode
+function TabToggle()
+  if &expandtab
+    set softtabstop=0
+    set noexpandtab
+  else
+    set softtabstop=2
+    set expandtab
+  endif
+endfunction
+nmap <F9> mz:execute TabToggle()<CR>'z
+call TabToggle()
