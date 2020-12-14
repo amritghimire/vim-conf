@@ -36,6 +36,7 @@ Plug 'ternjs/tern_for_vim'
 Plug 'skanehira/preview-markdown.vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'rust-lang/rust.vim'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
@@ -54,6 +55,7 @@ set hlsearch
 set wildmenu
 set showcmd
 set number relativenumber
+set eol
 set backspace=indent,eol,start
 
 " Enable Folding
@@ -109,11 +111,16 @@ nmap <leader>p <Plug>yankstack_substitute_older_paste
 nmap <leader>P <Plug>yankstack_substitute_newer_paste
 
 " Linter
-let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'python': ['autopep8', 'yapf']}
+let g:ale_fixers = {'javascript': ['prettier', 'eslint'], 'python': ['autopep8', 'yapf', 'isort', 'black', 'remove_trailing_lines'], 'java': ['uncrustify','google_java_format']}
+let g:ale_linters = {'python': ['flake8', 'mypy', 'pylint',  'pyls']}
 nmap <silent> <leader>k <Plug>(ale_previous_wrap)
 nmap <silent> <leader>j <Plug>(ale_next_wrap)
 let g:ale_set_highlights = 1
 let g:airline#extensions#ale#enabled = 1
+let g:ale_python_pylint_options = "--init-hook='import sys; sys.path.append(\".\")'"
+let g:ale_fix_on_save = 1
+let g:ale_completion_enabled = 1
+
 nnoremap <leader>f :PrettierAsync<cr>
 nnoremap <leader>i :ALEFix<cr>
 
@@ -144,8 +151,8 @@ let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 let g:UltiSnipsExpandTrigger="<c-j>"
-" let g:UltiSnipsJumpForwardTrigger="<c-b>"
-" let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:UltiSnipsEditSplit="vertical"
 
 let g:preview_markdown_vertical=1
@@ -212,7 +219,7 @@ vnoremap $3 <esc>`>a}<esc>`<i{<esc>
 vnoremap $$ <esc>`>a"<esc>`<i"<esc>
 vnoremap $q <esc>`>a'<esc>`<i'<esc>
 vnoremap $e <esc>`>a"<esc>`<i"<esc>
-vnoremap <silent> <leader>r :call VisualSelection('replace')<CR>
+vnoremap <silent> <leader>r <Plug>(ale-rename)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
 
@@ -282,3 +289,9 @@ function TabToggle()
 endfunction
 nmap <F9> mz:execute TabToggle()<CR>'z
 call TabToggle()
+
+
+set undofile
+set smartcase
+set ignorecase
+set foldcolumn=2
